@@ -1,0 +1,55 @@
+name: Build & Deploy — Pharveo static site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # permet un déclenchement manuel depuis GitHub UI
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build static site
+        run: pnpm build
+        # Génère le dossier out/
+
+      - name: Deploy via rsync to VPS
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avz --delete --exclude='.htaccess'
+          path: out/
+          remote_path: /var/www/pharveo/
+          remote_host: ${{ secrets.VPS_HOST }}
+          remote_port: ${{ secrets.VPS_SSH_PORT }}
+          remote_user: ${{ secrets.VPS_USER }}
+          remote_key: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Reload nginx (vérification de config incluse)
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          port: ${{ secrets.VPS_SSH_PORT }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            sudo nginx -t && sudo systemctl reload nginx
+            echo "Deploy OK — $(date)"

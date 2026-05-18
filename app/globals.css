@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Pharveo light theme — basé sur teal/cyan */
+    --background: 210 20% 98%;             /* off-white */
+    --foreground: 200 60% 10%;             /* deep slate */
+
+    --card: 0 0% 100%;
+    --card-foreground: 200 60% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 200 60% 10%;
+
+    --primary: 180 82% 30%;                /* pharveo teal #0E8A8A */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 30% 96%;
+    --secondary-foreground: 200 60% 15%;
+
+    --muted: 210 20% 95%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 180 70% 40%;                 /* pharveo cyan #14B8B8 */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 180 82% 30%;
+
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    --background: 200 60% 6%;              /* deep slate fond */
+    --foreground: 210 20% 98%;
+
+    --card: 200 50% 8%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 200 50% 8%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 180 70% 45%;
+    --primary-foreground: 200 60% 6%;
+
+    --secondary: 200 30% 15%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 200 30% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 180 70% 50%;
+    --accent-foreground: 200 60% 6%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 200 30% 18%;
+    --input: 200 30% 18%;
+    --ring: 180 70% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+/* Respect du prefers-reduced-motion (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utilitaires Magic UI */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .gradient-pharveo {
+    background-image: linear-gradient(
+      135deg,
+      #2DFFD4 0%,
+      #14B8B8 55%,
+      #0CCFCF 100%
+    );
+  }
+  .text-gradient-pharveo {
+    @apply gradient-pharveo bg-clip-text text-transparent;
+  }
+
+  /* Subtle noise texture overlay — add as a child element */
+  .bg-noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+
+  /* CSS-only grid pattern — hero version, plus lisible */
+  .bg-grid-hero {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  /* CSS-only grid pattern — version subtile pour sections */
+  .bg-grid-subtle {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+}
