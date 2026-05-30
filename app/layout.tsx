@@ -49,11 +49,6 @@ export const metadata: Metadata = {
     description:
       "Souverain. Hors-ligne. En XOF. Conçu pour vos délégués médicaux.",
   },
-  icons: {
-    icon: "/logo-pharveo.png",
-    shortcut: "/logo-pharveo.png",
-    apple: "/logo-pharveo.png",
-  },
   robots: { index: true, follow: true },
   verification: {
     google: "8CdttnPVEuHpf40Cl_SOuzhrMAD5US8Gr3jtgQ1ME_w",
