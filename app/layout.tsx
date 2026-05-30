@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Xakili", url: "https://xakili.ca" }],
   openGraph: {
-    title: "Pharveo - Le CRM pharmaceutique pour l'Afrique de l'Ouest francophone",
+    title: "Pharveo | CRM Visite Médicale pour l'Afrique de l'Ouest Francophone",
     description:
-      "Souverain. Hors-ligne. En XOF. Conçu pour vos délégués médicaux et grossistes locaux.",
+      "Votre force de vente tourne encore sur Excel et WhatsApp ? Pharveo digitalise tout - visites, rapports, tournées - conforme ARP Sénégal. Découvrez-le.",
     url: "https://pharveo.com",
     siteName: "Pharveo",
     locale: "fr_FR",
