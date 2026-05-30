@@ -61,7 +61,7 @@ export function FeaturesShowcaseSection() {
           <BlurFade key={f.tag} delay={0} inViewMargin="80px">
             <div
               className={cn(
-                "grid items-center gap-12 lg:grid-cols-2 lg:gap-16",
+                "grid items-center gap-12 lg:grid-cols-2 lg:gap-16 [&>*]:min-w-0",
                 f.reverse && "lg:[&>*:first-child]:order-2",
               )}
             >
@@ -94,9 +94,25 @@ export function FeaturesShowcaseSection() {
               </div>
 
               {/* Screen side */}
-              <div className="relative overflow-hidden rounded-2xl">
-                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-pharveo-teal/[0.18] blur-[50px]" />
-                <f.Mockup className="relative" />
+              <div className={cn(
+                "relative",
+                i < 2 ? "flex flex-col" : "flex justify-center",
+              )}>
+                {i < 2 && (
+                  <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-pharveo-teal/[0.12] blur-[60px]" />
+                )}
+                {i < 2 ? (
+                  /* Desktop mockups : scale-down sur mobile pour éviter overflow */
+                  <div className="overflow-hidden rounded-2xl h-[330px] sm:h-[480px] md:h-[640px] lg:h-auto lg:overflow-visible">
+                    <div className="origin-top-left scale-[0.46] sm:scale-[0.66] md:scale-[0.88] lg:scale-100 lg:transform-none">
+                      <div className="w-[800px] lg:w-full">
+                        <f.Mockup className="relative lg:-translate-y-2 lg:translate-x-2" />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <f.Mockup className="relative" />
+                )}
               </div>
             </div>
           </BlurFade>

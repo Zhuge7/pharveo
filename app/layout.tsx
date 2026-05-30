@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,11 +18,11 @@ const interTight = Inter_Tight({
 export const metadata: Metadata = {
   metadataBase: new URL("https://pharveo.com"),
   title: {
-    default: "Pharveo - Le CRM pharmaceutique pour l'Afrique de l'Ouest francophone",
+    default: "Pharveo | CRM Visite Médicale pour l'Afrique de l'Ouest Francophone",
     template: "%s | Pharveo",
   },
   description:
-    "Suite CRM pharmaceutique pensée pour les laboratoires et agences de représentation d'Afrique de l'Ouest francophone. Souverain. Hors-ligne. En XOF.",
+    "Votre force de vente tourne encore sur Excel et WhatsApp ? Pharveo digitalise tout - visites, rapports, tournées - conforme ARP Sénégal. Découvrez-le.",
   keywords: [
     "CRM pharmaceutique",
     "logiciel délégué médical",
@@ -48,7 +49,15 @@ export const metadata: Metadata = {
     description:
       "Souverain. Hors-ligne. En XOF. Conçu pour vos délégués médicaux.",
   },
+  icons: {
+    icon: "/logo-pharveo.png",
+    shortcut: "/logo-pharveo.png",
+    apple: "/logo-pharveo.png",
+  },
   robots: { index: true, follow: true },
+  verification: {
+    google: "8CdttnPVEuHpf40Cl_SOuzhrMAD5US8Gr3jtgQ1ME_w",
+  },
 };
 
 export default function RootLayout({
@@ -58,7 +67,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${inter.variable} ${interTight.variable}`}>
-      <body className="min-h-screen bg-background font-sans">{children}</body>
+      <body className="min-h-screen bg-background font-sans">
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }

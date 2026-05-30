@@ -20,9 +20,9 @@ const config: Config = {
         pharveo: {
           teal: "#0E8A8A",      // Couleur principale héritée Xakili
           cyan: "#14B8B8",      // Accents, hovers
-          slate: "#0F2027",     // Textes principaux, fonds dark
-          navy: "#1A3A52",      // Sections premium
-          deep: "#060D14",      // Ultra-deep dark — hero 2026
+          slate: "#1a3d5c",     // Textes principaux, fonds dark
+          navy: "#235478",      // Sections premium
+          deep: "#0e2236",      // Ultra-deep dark — hero 2026
           sand: "#F4EFE6",      // Fonds chaleureux
           white: "#FAFBFB",     // Fonds clairs
         },

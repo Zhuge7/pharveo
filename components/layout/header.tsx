@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
@@ -43,14 +44,15 @@ export function Header() {
       >
         <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           {/* Logo */}
-          <Link href="/" className="group flex items-center gap-2.5" onClick={() => setMenuOpen(false)}>
-            <div className="relative flex h-7 w-7 items-center justify-center rounded-[8px] bg-gradient-to-br from-pharveo-teal to-pharveo-cyan shadow-[0_0_16px_rgba(14,138,138,0.45)] transition-shadow duration-300 group-hover:shadow-[0_0_24px_rgba(20,184,184,0.55)]">
-              <span className="font-display text-xs font-bold text-white">P</span>
-            </div>
-            <span className="font-display text-[17px] font-bold tracking-[-0.03em] text-white">
-              pharveo
-            </span>
-            <span className="hidden text-[11px] text-white/20 md:inline">by Xakili</span>
+          <Link href="/" className="group flex items-center" onClick={() => setMenuOpen(false)}>
+            <Image
+              src="/logo-pharveo.png"
+              alt="Pharveo"
+              width={280}
+              height={80}
+              className="w-36 md:w-52 h-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}

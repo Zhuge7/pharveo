@@ -1,56 +1,47 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="border-t border-pharveo-slate/10 bg-pharveo-white">
+    <footer className="border-t border-white/[0.06] bg-pharveo-slate">
       <div className="container mx-auto max-w-6xl px-6 py-16">
-        <div className="grid grid-cols-2 gap-8 md:gap-12 md:grid-cols-5">
-          <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-pharveo-teal to-pharveo-cyan">
-                <span className="font-display text-sm font-bold text-white">
-                  P
-                </span>
-              </div>
-              <span className="font-display text-xl font-bold tracking-tight text-pharveo-slate">
-                pharveo
-              </span>
+        <div className="grid grid-cols-3 gap-6 md:grid-cols-5 md:gap-12">
+
+          {/* Brand col - full width on mobile */}
+          <div className="col-span-3 md:col-span-2">
+            <Link href="/">
+              <Image
+                src="/logo-pharveo.png"
+                alt="Pharveo"
+                width={160}
+                height={48}
+                className="w-36 h-auto object-contain"
+              />
             </Link>
-            <p className="mt-4 max-w-xs text-sm text-pharveo-slate/60">
+            <p className="mt-4 max-w-xs text-sm text-white/50">
               Le CRM pharmaceutique pour l'Afrique de l'Ouest francophone.
               Souverain. Hors-ligne. En XOF.
             </p>
-            <p className="mt-6 text-xs text-pharveo-slate/40">
-              by Xakili - Sudbury, Ontario, Canada
+            <p className="mt-6 text-xs text-white/25">
+              by Xakili - Ottawa, Ontario, Canada
             </p>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-pharveo-slate">
-              Produit
-            </h4>
-            <ul className="mt-4 space-y-2 text-sm">
+            <h4 className="text-sm font-semibold text-white">Produit</h4>
+            <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link
-                  href="/produit"
-                  className="text-pharveo-slate/60 hover:text-pharveo-slate"
-                >
+                <Link href="/produit" className="text-white/45 transition-colors hover:text-white">
                   Modules
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/tarifs"
-                  className="text-pharveo-slate/60 hover:text-pharveo-slate"
-                >
+                <Link href="/tarifs" className="text-white/45 transition-colors hover:text-white">
                   Tarifs
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/demo"
-                  className="text-pharveo-slate/60 hover:text-pharveo-slate"
-                >
+                <Link href="/demo" className="text-white/45 transition-colors hover:text-white">
                   Démo
                 </Link>
               </li>
@@ -58,31 +49,20 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-pharveo-slate">
-              Société
-            </h4>
-            <ul className="mt-4 space-y-2 text-sm">
+            <h4 className="text-sm font-semibold text-white">Société</h4>
+            <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link
-                  href="/a-propos"
-                  className="text-pharveo-slate/60 hover:text-pharveo-slate"
-                >
+                <Link href="/pourquoi-pharveo" className="text-white/45 transition-colors hover:text-white">
                   À propos
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/clients"
-                  className="text-pharveo-slate/60 hover:text-pharveo-slate"
-                >
+                <Link href="/clients" className="text-white/45 transition-colors hover:text-white">
                   Clients
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/contact"
-                  className="text-pharveo-slate/60 hover:text-pharveo-slate"
-                >
+                <Link href="/demo" className="text-white/45 transition-colors hover:text-white">
                   Contact
                 </Link>
               </li>
@@ -90,21 +70,15 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-pharveo-slate">Légal</h4>
-            <ul className="mt-4 space-y-2 text-sm">
+            <h4 className="text-sm font-semibold text-white">Légal</h4>
+            <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link
-                  href="/confidentialite"
-                  className="text-pharveo-slate/60 hover:text-pharveo-slate"
-                >
+                <Link href="/confidentialite" className="text-white/45 transition-colors hover:text-white">
                   Confidentialité
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/conditions"
-                  className="text-pharveo-slate/60 hover:text-pharveo-slate"
-                >
+                <Link href="/conditions" className="text-white/45 transition-colors hover:text-white">
                   Conditions
                 </Link>
               </li>
@@ -112,12 +86,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex items-center justify-between border-t border-pharveo-slate/10 pt-8">
-          <p className="text-xs text-pharveo-slate/40">
+        <div className="mt-12 border-t border-white/[0.06] pt-8">
+          <p className="text-xs text-white/25">
             © 2026 Pharveo by Xakili. Tous droits réservés.
-          </p>
-          <p className="text-xs text-pharveo-slate/40">
-            Données hébergées en Suisse 🇨🇭
           </p>
         </div>
       </div>

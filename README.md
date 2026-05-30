@@ -1,6 +1,6 @@
-# Pharvio Website Starter
+# Pharveo Website Starter
 
-Site marketing Next.js 15 + Tailwind + Magic UI pour Pharvio by Xakili — le CRM pharmaceutique pour l'Afrique de l'Ouest francophone.
+Site marketing Next.js 15 + Tailwind + Magic UI pour Pharveo by Xakili — le CRM pharmaceutique pour l'Afrique de l'Ouest francophone.
 
 ## Stack technique
 
@@ -16,8 +16,8 @@ Site marketing Next.js 15 + Tailwind + Magic UI pour Pharvio by Xakili — le CR
 ## Démarrage rapide
 
 ```bash
-# 1. Cloner ce starter dans votre repo Pharvio
-cd pharvio-website
+# 1. Cloner ce starter dans votre repo Pharveo
+cd pharveo-website
 
 # 2. Installer les dépendances
 pnpm install
@@ -35,11 +35,11 @@ pnpm start
 ## Structure
 
 ```
-pharvio-website/
+pharveo-website/
 ├── app/
 │   ├── layout.tsx              # Root layout, polices Inter
 │   ├── page.tsx                # Home page (assemble toutes les sections)
-│   └── globals.css             # CSS global + variables charte Pharvio
+│   └── globals.css             # CSS global + variables charte Pharveo
 ├── components/
 │   ├── layout/
 │   │   ├── header.tsx          # Navigation principale
@@ -56,38 +56,38 @@ pharvio-website/
 │       ├── hero.tsx
 │       ├── logos.tsx
 │       ├── pillars.tsx         # 3 piliers Bento Grid
-│       ├── modules.tsx         # 9 modules Pharvio
+│       ├── modules.tsx         # 9 modules Pharveo
 │       ├── connectors.tsx      # Animated Beam grossistes
 │       ├── case-study.tsx      # IMS-Pharma + Number Ticker
-│       ├── comparison.tsx      # Tableau Pharvio vs concurrents
+│       ├── comparison.tsx      # Tableau Pharveo vs concurrents
 │       └── final-cta.tsx
 ├── lib/
 │   └── utils.ts                # cn() helper
-├── tailwind.config.ts          # Charte Pharvio + animations Magic UI
+├── tailwind.config.ts          # Charte Pharveo + animations Magic UI
 ├── tsconfig.json
 └── package.json
 ```
 
-## Charte Pharvio
+## Charte Pharveo
 
 Couleurs principales (config Tailwind) :
 
 | Token | Valeur | Usage |
 |---|---|---|
-| `pharvio-teal` | `#0E8A8A` | Couleur principale, hérité Xakili |
-| `pharvio-cyan` | `#14B8B8` | Accents, hovers, gradient |
-| `pharvio-slate` | `#0F2027` | Textes principaux, fonds dark |
-| `pharvio-navy` | `#1A3A52` | Sections premium institutionnel |
-| `pharvio-sand` | `#F4EFE6` | Fonds chaleureux |
-| `pharvio-white` | `#FAFBFB` | Off-white pour fonds clairs |
+| `pharveo-teal` | `#0E8A8A` | Couleur principale, hérité Xakili |
+| `pharveo-cyan` | `#14B8B8` | Accents, hovers, gradient |
+| `pharveo-slate` | `#0F2027` | Textes principaux, fonds dark |
+| `pharveo-navy` | `#1A3A52` | Sections premium institutionnel |
+| `pharveo-sand` | `#F4EFE6` | Fonds chaleureux |
+| `pharveo-white` | `#FAFBFB` | Off-white pour fonds clairs |
 
 Polices :
 - `font-sans` → Inter (corps de texte)
 - `font-display` → Inter Tight (titres)
 
 Utilitaires custom :
-- `text-gradient-pharvio` → texte avec gradient teal → cyan
-- `gradient-pharvio` → background gradient
+- `text-gradient-pharveo` → texte avec gradient teal → cyan
+- `gradient-pharveo` → background gradient
 
 ## Composants Magic UI utilisés
 
@@ -103,10 +103,10 @@ Utilitaires custom :
 
 ## Étapes suivantes
 
-1. **Acheter les domaines** : pharvio.com + pharvio.ca
+1. **Acheter les domaines** : pharveo.com + pharveo.ca
 2. **Initialiser le repo Next.js** :
    ```bash
-   pnpm create next-app@latest pharvio-website --typescript --tailwind --app
+   pnpm create next-app@latest pharveo-website --typescript --tailwind --app
    ```
    Puis copier ce starter par-dessus.
 3. **Compléter les sections manquantes** :
@@ -121,7 +121,7 @@ Utilitaires custom :
    ```bash
    vercel --prod
    ```
-   Connecter les domaines pharvio.com et pharvio.ca.
+   Connecter les domaines pharveo.com et pharveo.ca.
 
 ## Performance & SEO
 

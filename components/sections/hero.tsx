@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Shield, WifiOff, Globe, Clock } from "lucide-react";
+import { ArrowRight, Shield, WifiOff, Globe, Clock, MapPin } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { PharveoPhoneMockup } from "@/components/ui/pharveo-phone-mockup";
@@ -19,7 +19,7 @@ const rotatingTerms = [
 const metrics = [
   { value: "4-8 sem.", label: "go live garanti" },
   { value: "100%", label: "hors-ligne" },
-  { value: "Suisse", label: "souveraineté" },
+  { value: "ARP", label: "conformité Sénégal" },
 ];
 
 const trustBadges = [
@@ -62,24 +62,12 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 bg-noise-overlay opacity-[0.03]" />
 
       {/* Content - split layout */}
-      <div className="container relative z-10 mx-auto max-w-6xl px-6 pb-16 pt-24 md:pb-28 md:pt-40">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-8 xl:gap-16">
+      <div className="container relative z-10 mx-auto max-w-6xl px-6 pb-8 pt-20 md:pb-28 md:pt-40">
+        <div className="grid items-center gap-4 lg:grid-cols-2 lg:gap-8 xl:gap-16">
 
           {/* ── Colonne gauche - texte ── */}
           <div className="flex flex-col items-center lg:items-start">
 
-            {/* Badge client de référence */}
-            <BlurFade delay={0} inViewMargin="0px">
-              <div className="mb-7 flex w-fit items-center gap-2 rounded-full border border-pharveo-teal/40 bg-pharveo-teal/[0.12] px-4 py-1.5 backdrop-blur-sm">
-                <span className="relative flex h-1.5 w-1.5 shrink-0">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pharveo-cyan opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pharveo-cyan" />
-                </span>
-                <span className="text-xs font-medium tracking-wide text-pharveo-cyan">
-                  Déjà déployé chez IMS-Pharma Sénégal · 137 délégués actifs
-                </span>
-              </div>
-            </BlurFade>
 
             {/* Headline avec mot rotatif - style Inception */}
             <BlurFade delay={50} inViewMargin="0px">
@@ -162,8 +150,64 @@ export function HeroSection() {
           <BlurFade delay={120} inViewMargin="0px">
             <div className="relative flex items-center justify-center lg:justify-end">
               <div className="pointer-events-none absolute inset-x-0 -bottom-8 h-32 bg-gradient-to-t from-pharveo-deep to-transparent z-10 lg:hidden" />
-              <div className="relative w-full max-w-[300px] sm:max-w-[340px] lg:max-w-none lg:-rotate-1 lg:translate-y-4">
-                <PharveoPhoneMockup />
+              <div className="relative lg:-rotate-1 lg:translate-y-4">
+                {/* Container hauteur contrainte sur mobile + scale CSS reliable (zoom ne marche pas sur Safari iOS) */}
+                <div className="h-[395px] sm:h-[500px] lg:h-auto overflow-hidden lg:overflow-visible">
+                  <div className="origin-top scale-[0.85] sm:scale-[0.85] lg:scale-100">
+                    <PharveoPhoneMockup />
+                  </div>
+                </div>
+
+                {/* Floating callout labels — desktop only */}
+                <BlurFade delay={340} inViewMargin="0px">
+                  {/* Top-left: Tournée optimisée */}
+                  <div className="absolute -left-[140px] top-[110px] hidden lg:flex items-center gap-2 rounded-2xl border border-teal-500/25 bg-[#0a1a1a]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-teal-500/20">
+                      <MapPin className="h-3 w-3 text-teal-400" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-white leading-none">Tournée optimisée</p>
+                      <p className="text-[8px] text-white/40 mt-0.5">par zone géographique</p>
+                    </div>
+                    {/* connector dot */}
+                    <div className="absolute -right-[18px] top-1/2 -translate-y-1/2 flex items-center gap-1">
+                      <div className="h-px w-3 bg-teal-500/30" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-teal-400/60" />
+                    </div>
+                  </div>
+
+                  {/* Right: Visite en cours LIVE */}
+                  <div className="absolute -right-[148px] top-[260px] hidden lg:flex items-center gap-2 rounded-2xl border border-emerald-500/25 bg-[#0a1a12]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500/20">
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-white leading-none">Visite en cours</p>
+                      <p className="text-[8px] text-white/40 mt-0.5">sync temps réel</p>
+                    </div>
+                    {/* connector */}
+                    <div className="absolute -left-[18px] top-1/2 -translate-y-1/2 flex items-center gap-1 flex-row-reverse">
+                      <div className="h-px w-3 bg-emerald-500/30" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-400/60" />
+                    </div>
+                  </div>
+
+                  {/* Bottom-left: Hors-ligne prêt */}
+                  <div className="absolute -left-[132px] bottom-[140px] hidden lg:flex items-center gap-2 rounded-2xl border border-amber-500/25 bg-[#1a1200]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-amber-500/20">
+                      <WifiOff className="h-3 w-3 text-amber-400" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-white leading-none">Offline-first</p>
+                      <p className="text-[8px] text-white/40 mt-0.5">AES-256 sur l&apos;appareil</p>
+                    </div>
+                    {/* connector */}
+                    <div className="absolute -right-[18px] top-1/2 -translate-y-1/2 flex items-center gap-1">
+                      <div className="h-px w-3 bg-amber-500/30" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-amber-400/60" />
+                    </div>
+                  </div>
+                </BlurFade>
               </div>
             </div>
           </BlurFade>
