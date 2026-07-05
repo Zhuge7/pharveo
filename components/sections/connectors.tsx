@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/magicui/animated-beam";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { GridPattern } from "@/components/magicui/grid-pattern";
+import { CornerBrackets, PulseDot } from "@/components/ui/hud-accents";
 
 const Circle = forwardRef<
   HTMLDivElement,
@@ -23,7 +24,10 @@ const Circle = forwardRef<
         {children}
       </div>
       {label && (
-        <span className="text-xs font-semibold tracking-wide text-white/40">{label}</span>
+        <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-white/40">
+          <PulseDot />
+          {label}
+        </span>
       )}
     </div>
   );
@@ -81,8 +85,19 @@ export function ConnectorsSection() {
           <BlurFade delay={120} inViewMargin="60px">
             <div
               ref={containerRef}
-              className="relative flex h-[380px] w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm"
+              className="group relative flex h-[380px] w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-colors duration-500 hover:border-pharveo-teal/25"
             >
+              {/* Fond : grille technique masquée */}
+              <GridPattern
+                width={28}
+                height={28}
+                className="[mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,white,transparent)]"
+              />
+
+              {/* Liseré supérieur */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+              <CornerBrackets color="border-pharveo-teal/60" />
               <div className="flex size-full max-w-sm flex-col items-stretch justify-between gap-8 p-8">
                 <div className="flex flex-row items-center justify-around">
                   <Circle ref={ubipharmRef} label="Ubipharm">

@@ -1,5 +1,7 @@
 import { Check, X } from "lucide-react";
 import { BlurFade } from "@/components/magicui/blur-fade";
+import { GridPattern } from "@/components/magicui/grid-pattern";
+import { CornerBrackets } from "@/components/ui/hud-accents";
 import { cn } from "@/lib/utils";
 
 const rows = [
@@ -25,7 +27,7 @@ const rows = [
   },
   {
     question: "Les données sont-elles souveraines ?",
-    pharveo: "Hébergement en Suisse (UE) - export BI/ERP libre à tout moment",
+    pharveo: "Vous restez propriétaire - export BI/ERP libre à tout moment",
     other: "Accès restreint à vos propres données, lock-in fournisseur",
   },
   {
@@ -42,8 +44,11 @@ const rows = [
 
 export function ComparisonSection() {
   return (
-    <section className="bg-pharveo-white py-20 md:py-36">
-      <div className="container mx-auto max-w-5xl px-6">
+    <section className="relative overflow-hidden bg-pharveo-white py-20 md:py-36">
+      {/* Liseré supérieur teal */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pharveo-teal/25 to-transparent" />
+
+      <div className="container relative z-10 mx-auto max-w-5xl px-6">
         <BlurFade delay={0} inViewMargin="60px">
           <div className="mx-auto mb-16 max-w-2xl text-center">
             <span className="inline-block rounded-full border border-pharveo-teal/20 bg-pharveo-teal/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-pharveo-teal">
@@ -64,7 +69,8 @@ export function ComparisonSection() {
           {/* Mobile: cartes empilées */}
           <div className="space-y-3 md:hidden">
             {rows.map((row) => (
-              <div key={row.question} className="overflow-hidden rounded-2xl border border-pharveo-slate/10 bg-white shadow-sm">
+              <div key={row.question} className="relative overflow-hidden rounded-2xl border border-pharveo-slate/10 bg-white shadow-sm">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pharveo-teal/30 to-transparent" />
                 <div className="border-b border-pharveo-slate/[0.07] bg-pharveo-slate/[0.03] px-4 py-3">
                   <p className="text-sm font-semibold text-pharveo-slate/70">{row.question}</p>
                 </div>
@@ -96,7 +102,7 @@ export function ComparisonSection() {
           <div className="hidden md:block">
             <div className="mb-3 grid grid-cols-[1fr_1fr_1fr] gap-4 px-4 text-center">
               <div />
-              <div className="rounded-xl border border-pharveo-teal/20 bg-pharveo-teal/[0.08] px-4 py-3">
+              <div className="rounded-xl border border-pharveo-teal/20 bg-pharveo-teal/[0.08] px-4 py-3 shadow-[0_0_30px_-10px_rgba(14,138,138,0.35)]">
                 <p className="text-sm font-bold text-pharveo-teal">Pharveo</p>
                 <p className="mt-0.5 text-[11px] text-pharveo-teal/60">Pour l'Afrique de l'Ouest</p>
               </div>
@@ -105,12 +111,24 @@ export function ComparisonSection() {
                 <p className="mt-0.5 text-[11px] text-pharveo-slate/35">Solutions mondiales</p>
               </div>
             </div>
-            <div className="overflow-hidden rounded-2xl border border-pharveo-slate/10 bg-white shadow-[0_4px_40px_rgba(15,32,39,0.05)]">
+            <div className="group relative overflow-hidden rounded-2xl border border-pharveo-slate/10 bg-white shadow-[0_4px_40px_rgba(15,32,39,0.05)] transition-shadow duration-500 hover:shadow-[0_4px_40px_rgba(15,32,39,0.05),0_0_70px_-15px_rgba(14,138,138,0.25)]">
+              {/* Grille technique très discrète */}
+              <GridPattern
+                width={28}
+                height={28}
+                className="stroke-pharveo-slate/[0.04] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,white,transparent)]"
+              />
+
+              {/* Liseré supérieur teal */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-pharveo-teal/40 to-transparent" />
+
+              <CornerBrackets color="border-pharveo-teal/40" />
+
               {rows.map((row, i) => (
                 <div
                   key={row.question}
                   className={cn(
-                    "grid grid-cols-[1fr_1fr_1fr] gap-0 transition-colors hover:bg-pharveo-slate/[0.015]",
+                    "relative grid grid-cols-[1fr_1fr_1fr] gap-0 transition-colors hover:bg-pharveo-teal/[0.03]",
                     i > 0 && "border-t border-pharveo-slate/[0.07]",
                   )}
                 >

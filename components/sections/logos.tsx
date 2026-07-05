@@ -27,7 +27,7 @@ export function LogosSection() {
         {clients.map((c) => (
           <div
             key={c.name}
-            className="mx-3 flex h-11 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 backdrop-blur-sm transition-all duration-300 hover:border-pharveo-teal/25 hover:bg-white/[0.06]"
+            className="mx-3 flex h-11 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 backdrop-blur-sm transition-all duration-300 hover:border-pharveo-teal/40 hover:bg-white/[0.06] hover:shadow-[0_0_30px_-10px_rgba(20,184,184,0.4)]"
           >
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-pharveo-teal/30 to-pharveo-cyan/20 text-[8px] font-black text-pharveo-cyan">
               {c.abbr.slice(0, 1)}

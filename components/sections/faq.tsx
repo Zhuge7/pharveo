@@ -4,6 +4,8 @@ import * as Accordion from "@radix-ui/react-accordion";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { BlurFade } from "@/components/magicui/blur-fade";
+import { GridPattern } from "@/components/magicui/grid-pattern";
+import { CornerBrackets } from "@/components/ui/hud-accents";
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -35,7 +37,7 @@ const faqs = [
   {
     question: "Où sont hébergées mes données ?",
     answer:
-      "Vos données sont hébergées en Suisse (infrastructure Infomaniak), dans des datacenters certifiés ISO 27001. Elles ne transitent pas par des serveurs américains. Vous restez propriétaire de vos données et pouvez en demander l'export à tout moment. C'est notre engagement souveraineté.",
+      "Vos données sont hébergées sur une infrastructure sécurisée, chiffrées de bout en bout (AES-256) et sauvegardées régulièrement. Vous restez propriétaire de vos données et pouvez en demander l'export à tout moment. C'est notre engagement souveraineté.",
   },
   {
     question: "Puis-je migrer mes données existantes ?",
@@ -54,6 +56,13 @@ export function FaqSection() {
     <section className="relative overflow-hidden bg-pharveo-slate py-20 md:py-36">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
+      {/* Grille technique très subtile en fond */}
+      <GridPattern
+        width={32}
+        height={32}
+        className="opacity-50 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,white,transparent)]"
+      />
+
       <div className="container relative z-10 mx-auto max-w-3xl px-6">
         <BlurFade delay={0} inViewMargin="60px">
           <div className="mb-16 text-center">
@@ -71,7 +80,9 @@ export function FaqSection() {
         </BlurFade>
 
         <BlurFade delay={80} inViewMargin="60px">
-          <Accordion.Root type="single" collapsible className="space-y-3">
+          <div className="group relative rounded-2xl">
+            <CornerBrackets className="-inset-3 md:-inset-4" color="border-pharveo-teal/50" />
+            <Accordion.Root type="single" collapsible className="space-y-3">
             {faqs.map((faq, i) => (
               <Accordion.Item
                 key={i}
@@ -79,6 +90,7 @@ export function FaqSection() {
                 className={cn(
                   "group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]",
                   "transition-all duration-300 hover:border-white/20 data-[state=open]:border-pharveo-teal/30 data-[state=open]:bg-pharveo-teal/5",
+                  "data-[state=open]:shadow-[0_0_45px_-15px_rgba(20,184,184,0.35)]",
                 )}
               >
                 <Accordion.Header>
@@ -94,14 +106,15 @@ export function FaqSection() {
                 </Accordion.Content>
               </Accordion.Item>
             ))}
-          </Accordion.Root>
+            </Accordion.Root>
+          </div>
         </BlurFade>
 
         <BlurFade delay={160} inViewMargin="60px">
           <p className="mt-10 text-center text-sm text-white/40">
             Vous avez d'autres questions ?{" "}
             <Link
-              href="/contact"
+              href="/demo"
               className="text-pharveo-cyan transition-colors hover:text-pharveo-teal"
             >
               Écrivez-nous

@@ -1,5 +1,6 @@
 import { Marquee } from "@/components/magicui/marquee";
 import { BlurFade } from "@/components/magicui/blur-fade";
+import { PulseDot } from "@/components/ui/hud-accents";
 import { cn } from "@/lib/utils";
 
 const testimonials = [
@@ -105,8 +106,12 @@ function TestimonialCard({
       className={cn(
         "relative w-[320px] overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm",
         "transition-all duration-300 hover:border-pharveo-teal/30 hover:bg-white/[0.07]",
+        "hover:shadow-[0_0_50px_-15px_rgba(20,184,184,0.35)]",
       )}
     >
+      {/* Liseré supérieur */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
       {/* 5 étoiles */}
       <StarRow />
 
@@ -125,7 +130,8 @@ function TestimonialCard({
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{name}</p>
-          <p className="text-xs text-white/40">
+          <p className="flex items-center gap-1.5 text-xs text-white/40">
+            <PulseDot />
             {role} · {company}
           </p>
         </div>

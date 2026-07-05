@@ -1,6 +1,7 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { PharveoMockup, AnalyticsMockup, OfflineMockup } from "@/components/ui/pharveo-mockup";
+import { CornerBrackets, GhostNumber, PulseDot } from "@/components/ui/hud-accents";
 import { cn } from "@/lib/utils";
 
 const features = [
@@ -16,6 +17,7 @@ const features = [
       "Capture visite en 90 secondes chrono",
     ],
     href: "/produit#visites",
+    id: "visites",
     Mockup: PharveoMockup,
     reverse: false,
   },
@@ -31,6 +33,7 @@ const features = [
       "Comparaison N vs N-1 sans traitement manuel",
     ],
     href: "/produit#analytics",
+    id: "analytics",
     Mockup: AnalyticsMockup,
     reverse: true,
   },
@@ -46,6 +49,7 @@ const features = [
       "Indicateur de statut visible en permanence",
     ],
     href: "/produit#offline",
+    id: "offline",
     Mockup: OfflineMockup,
     reverse: false,
   },
@@ -60,14 +64,22 @@ export function FeaturesShowcaseSection() {
         {features.map((f, i) => (
           <BlurFade key={f.tag} delay={0} inViewMargin="80px">
             <div
+              id={f.id}
               className={cn(
-                "grid items-center gap-12 lg:grid-cols-2 lg:gap-16 [&>*]:min-w-0",
+                "grid scroll-mt-28 items-center gap-12 lg:grid-cols-2 lg:gap-16 [&>*]:min-w-0",
                 f.reverse && "lg:[&>*:first-child]:order-2",
               )}
             >
               {/* Text side */}
-              <div>
-                <span className="inline-block rounded-full border border-pharveo-teal/40 bg-pharveo-teal/[0.12] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-pharveo-cyan">
+              <div className="group relative">
+                {/* Numéro fantôme */}
+                <GhostNumber
+                  value={String(i + 1).padStart(2, "0")}
+                  className="-top-6 right-0 md:-top-10 md:text-[7rem]"
+                />
+
+                <span className="relative z-10 inline-flex items-center gap-2 rounded-full border border-pharveo-teal/40 bg-pharveo-teal/[0.12] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-pharveo-cyan">
+                  <PulseDot delay={i * 0.5} />
                   {f.tag}
                 </span>
                 <h3 className="mt-5 text-balance text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
@@ -86,32 +98,40 @@ export function FeaturesShowcaseSection() {
                 </ul>
                 <a
                   href={f.href}
-                  className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-pharveo-cyan transition-all hover:text-white"
+                  className="relative z-10 mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-pharveo-cyan transition-all duration-300 hover:gap-3 hover:text-white"
                 >
                   En savoir plus
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
 
               {/* Screen side */}
               <div className={cn(
-                "relative",
+                "group relative",
                 i < 2 ? "flex flex-col" : "flex justify-center",
               )}>
                 {i < 2 && (
-                  <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-pharveo-teal/[0.12] blur-[60px]" />
+                  <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-pharveo-teal/[0.12] blur-[60px] transition-opacity duration-500 group-hover:opacity-70" />
                 )}
                 {i < 2 ? (
                   /* Desktop mockups : scale-down sur mobile pour éviter overflow */
-                  <div className="overflow-hidden rounded-2xl h-[330px] sm:h-[480px] md:h-[640px] lg:h-auto lg:overflow-visible">
+                  <div className="relative overflow-hidden rounded-2xl h-[330px] sm:h-[480px] md:h-[640px] lg:h-auto lg:overflow-visible transition-shadow duration-500 group-hover:shadow-[0_0_70px_-15px_rgba(20,184,184,0.4)]">
                     <div className="origin-top-left scale-[0.46] sm:scale-[0.66] md:scale-[0.88] lg:scale-100 lg:transform-none">
                       <div className="w-[800px] lg:w-full">
                         <f.Mockup className="relative lg:-translate-y-2 lg:translate-x-2" />
                       </div>
                     </div>
+                    {/* Liseré supérieur brillant */}
+                    <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    <CornerBrackets className="hidden lg:block" />
                   </div>
                 ) : (
-                  <f.Mockup className="relative" />
+                  <div className="relative transition-shadow duration-500 group-hover:shadow-[0_0_70px_-15px_rgba(20,184,184,0.4)]">
+                    <f.Mockup className="relative" />
+                    {/* Liseré supérieur brillant */}
+                    <div className="pointer-events-none absolute inset-x-6 top-0 z-10 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    <CornerBrackets className="-inset-3 hidden lg:block" />
+                  </div>
                 )}
               </div>
             </div>

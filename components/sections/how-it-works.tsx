@@ -1,5 +1,7 @@
 import { UserPlus, Tablet, BarChart3 } from "lucide-react";
 import { BlurFade } from "@/components/magicui/blur-fade";
+import { GridPattern } from "@/components/magicui/grid-pattern";
+import { CornerBrackets, GhostNumber, PulseDot } from "@/components/ui/hud-accents";
 import { cn } from "@/lib/utils";
 
 const steps = [
@@ -68,6 +70,16 @@ export function HowItWorksSection() {
           {/* Connector line (desktop only) */}
           <div className="pointer-events-none absolute top-[3.5rem] left-[calc(16.67%+2rem)] right-[calc(16.67%+2rem)] hidden h-px bg-gradient-to-r from-pharveo-teal/30 via-pharveo-cyan/20 to-pharveo-teal/30 lg:block" />
 
+          {/* Points de statut pulsants sur la ligne, dans les interstices */}
+          <div className="pointer-events-none absolute inset-x-0 top-[3.5rem] hidden lg:block">
+            <span className="absolute left-1/3 -translate-x-1/2 -translate-y-1/2">
+              <PulseDot />
+            </span>
+            <span className="absolute left-2/3 -translate-x-1/2 -translate-y-1/2">
+              <PulseDot delay={0.6} />
+            </span>
+          </div>
+
           {steps.map((step, i) => (
             <BlurFade key={step.number} delay={i * 60} inViewMargin="60px">
               <div
@@ -75,20 +87,41 @@ export function HowItWorksSection() {
                   "group relative h-full overflow-hidden rounded-2xl border border-white/10 p-8 transition-all duration-500",
                   `bg-gradient-to-br ${step.accent}`,
                   step.glow,
-                  "hover:border-white/20",
+                  "hover:-translate-y-1 hover:border-white/20",
                 )}
               >
-                {/* Step number */}
-                <div className="absolute top-6 right-6 font-display text-5xl font-bold text-white/5 select-none">
-                  {step.number}
-                </div>
+                {/* Fond : grille technique masquée */}
+                <GridPattern
+                  width={28}
+                  height={28}
+                  className="[mask-image:radial-gradient(ellipse_80%_70%_at_30%_10%,white,transparent)]"
+                />
+
+                {/* Liseré supérieur brillant */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+                <CornerBrackets
+                  color={
+                    i === 2
+                      ? "border-amber-400/60"
+                      : i === 1
+                        ? "border-pharveo-cyan/60"
+                        : "border-pharveo-teal/60"
+                  }
+                />
+
+                {/* Numéro fantôme */}
+                <GhostNumber value={step.number} className="right-2 top-2 md:top-2" />
 
                 {/* Icon */}
                 <div
                   className={cn(
-                    "relative z-10 mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl border transition-all duration-300 group-hover:scale-110",
+                    "relative z-10 mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl border transition-all duration-500 group-hover:rotate-3 group-hover:scale-110",
                     step.iconBg,
                     step.iconColor,
+                    i === 2
+                      ? "shadow-[0_0_35px_-8px_rgba(245,158,11,0.5)]"
+                      : "shadow-[0_0_35px_-8px_rgba(20,184,184,0.6)]",
                   )}
                 >
                   <step.icon className="h-6 w-6" />

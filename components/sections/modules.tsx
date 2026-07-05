@@ -10,6 +10,9 @@ import {
   Activity, Shield, Package, Calendar,
 } from "lucide-react";
 import { BlurFade } from "@/components/magicui/blur-fade";
+import { BorderBeam } from "@/components/magicui/border-beam";
+import { GridPattern } from "@/components/magicui/grid-pattern";
+import { CornerBrackets, PulseDot } from "@/components/ui/hud-accents";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -48,11 +51,14 @@ function VmVisual() {
         {/* ambient glow top-right */}
         <div className="pointer-events-none absolute -right-4 -top-4 h-24 w-24 rounded-full bg-teal-400/[0.18] blur-2xl"/>
         <div className="pointer-events-none absolute -right-8 top-8 h-16 w-16 rounded-full bg-cyan-400/[0.10] blur-xl"/>
+        {/* micro-grille technique + liseré */}
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:14px_14px]"/>
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-teal-400/50 to-transparent"/>
 
         <div className="flex items-start gap-3">
           {/* Progress ring */}
           <div className="relative shrink-0">
-            <svg width="48" height="48" viewBox="0 0 48 48">
+            <svg width="48" height="48" viewBox="0 0 48 48" className="[filter:drop-shadow(0_0_6px_rgba(45,255,212,0.45))]">
               <circle cx="24" cy="24" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3.5"/>
               <circle cx="24" cy="24" r={r} fill="none" stroke="url(#vmR)" strokeWidth="3.5"
                 strokeLinecap="round" strokeDasharray={`${dash} ${circ - dash}`} transform="rotate(-90 24 24)"/>
@@ -122,7 +128,7 @@ function VmVisual() {
           const isDone    = v.status === "done";
           return (
             <div key={v.hcp} className={cn(
-              "relative flex items-center gap-2.5 rounded-xl border px-3 transition-all",
+              "relative flex items-center gap-2.5 overflow-hidden rounded-xl border px-3 transition-all",
               isCurrent
                 ? "py-2.5 border-teal-500/35 bg-gradient-to-r from-teal-950/80 via-[#07201e] to-cyan-950/30 shadow-[0_0_24px_-8px_rgba(14,138,138,0.55)]"
                 : isDone
@@ -132,6 +138,10 @@ function VmVisual() {
               {/* Left accent line for current */}
               {isCurrent && (
                 <div className="absolute left-0 top-2 bottom-2 w-[3px] rounded-r-full bg-gradient-to-b from-teal-400 to-cyan-500"/>
+              )}
+              {/* halo respirant sur la visite en cours */}
+              {isCurrent && (
+                <div className="pointer-events-none absolute inset-0 animate-glow-pulse bg-[radial-gradient(ellipse_at_left,rgba(20,184,184,0.14),transparent_60%)]"/>
               )}
 
               <span className={cn("w-8 shrink-0 font-mono text-[8.5px] font-bold",
@@ -188,7 +198,7 @@ function VmVisual() {
           {icon:Activity, label:"CLM",     active:false},
         ].map(({icon:Icon,label,active})=>(
           <div key={label} className="flex flex-col items-center gap-0.5">
-            <div className={cn("flex h-6 w-6 items-center justify-center rounded-lg", active && "bg-teal-500/15")}>
+            <div className={cn("flex h-6 w-6 items-center justify-center rounded-lg", active && "bg-teal-500/15 shadow-[0_0_14px_-2px_rgba(20,184,184,0.55)]")}>
               <Icon className={cn("h-3.5 w-3.5", active ? "text-teal-400" : "text-white/20")}/>
             </div>
             <span className={cn("text-[7px]", active ? "font-bold text-teal-400" : "text-white/20")}>{label}</span>
@@ -223,7 +233,8 @@ function SuperviseurVisual() {
           {val:"89%",  label:"Cycle Plan att.", color:"text-emerald-400", glow:"",bg:"border-white/[0.13] bg-white/[0.07]"},
           {val:"2",    label:"Coaching / att.", color:"text-amber-400",   glow:"",bg:"border-amber-500/20 bg-amber-500/[0.07]"},
         ].map(s=>(
-          <div key={s.label} className={cn("rounded-xl border p-2 text-center", s.bg, s.glow)}>
+          <div key={s.label} className={cn("relative overflow-hidden rounded-xl border p-2 text-center", s.bg, s.glow)}>
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"/>
             <p className={cn("text-[15px] font-black leading-none", s.color)}>{s.val}</p>
             <p className="mt-0.5 text-[7px] leading-tight text-white/30">{s.label}</p>
           </div>
@@ -250,15 +261,15 @@ function SuperviseurVisual() {
             <span className="text-right text-[9px] font-bold text-blue-400">{r.freq}</span>
             <div className="flex flex-col gap-0.5">
               <div className="h-1 overflow-hidden rounded-full bg-white/[0.07]">
-                <div className={cn("h-full rounded-full", r.att>=90?"bg-emerald-400":r.att>=70?"bg-amber-400":"bg-rose-400")} style={{width:`${r.att}%`}}/>
+                <div className={cn("h-full rounded-full", r.att>=90?"bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]":r.att>=70?"bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]":"bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.6)]")} style={{width:`${r.att}%`}}/>
               </div>
               <span className={cn("text-right text-[9px] font-black", r.color)}>{r.att}%</span>
             </div>
           </div>
         ))}
         {/* Alerte comptes sous-atteints */}
-        <div className="flex items-center gap-2 border-t border-white/[0.09] bg-rose-500/[0.06] px-3 py-1.5">
-          <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-rose-400 animate-pulse"/>
+        <div className="flex items-center gap-2 border-l-2 border-t border-l-rose-400/60 border-t-white/[0.09] bg-rose-500/[0.06] px-3 py-1.5">
+          <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-rose-400 animate-pulse shadow-[0_0_8px_rgba(251,113,133,0.8)]"/>
           <span className="text-[8px] text-rose-300">3 comptes sous-atteints · Médina · Parcelles</span>
         </div>
       </div>
@@ -272,7 +283,7 @@ function SuperviseurVisual() {
         <div className="flex items-end gap-1" style={{height:36}}>
           {bars.map((b,i)=>(
             <div key={i} className="flex flex-1 flex-col items-center gap-1">
-              <div className={cn("w-full rounded-sm", i===5?"bg-blue-400":"bg-white/[0.12]")}
+              <div className={cn("w-full rounded-sm", i===5?"bg-gradient-to-t from-blue-500/60 to-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.5)]":"bg-gradient-to-t from-white/[0.06] to-white/[0.16]")}
                 style={{height:`${(b/maxB)*36}px`}}/>
               <span className={cn("text-[7px]", i===5?"font-bold text-blue-400":"text-white/20")}>{days[i]}</span>
             </div>
@@ -296,10 +307,10 @@ function DirectionVisual() {
   const line = `M ${pts[0]} L ${pts.slice(1).join(" L ")}`;
 
   const regions = [
-    { name:"Dakar",       del:8,  vis:324, cov:"78%", att:"+4%",  attColor:"text-emerald-400", bar:"bg-emerald-400" },
-    { name:"Thiès",       del:3,  vis:187, cov:"65%", att:" 0%",  attColor:"text-amber-400",   bar:"bg-amber-400"   },
-    { name:"Saint-Louis", del:2,  vis:98,  cov:"54%", att:"-8%",  attColor:"text-rose-400",    bar:"bg-rose-400"    },
-    { name:"Ziguinchor",  del:1,  vis:45,  cov:"61%", att:"-3%",  attColor:"text-amber-400",   bar:"bg-amber-400"   },
+    { name:"Dakar",       del:8,  vis:324, cov:"78%", att:"+4%",  attColor:"text-emerald-400", bar:"bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" },
+    { name:"Thiès",       del:3,  vis:187, cov:"65%", att:" 0%",  attColor:"text-amber-400",   bar:"bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.7)]"   },
+    { name:"Saint-Louis", del:2,  vis:98,  cov:"54%", att:"-8%",  attColor:"text-rose-400",    bar:"bg-rose-400 shadow-[0_0_6px_rgba(251,113,133,0.7)]"    },
+    { name:"Ziguinchor",  del:1,  vis:45,  cov:"61%", att:"-3%",  attColor:"text-amber-400",   bar:"bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.7)]"   },
   ];
 
   return (
@@ -312,7 +323,8 @@ function DirectionVisual() {
           {val:"89%",  label:"Cycle Plan nat.",color:"text-emerald-400", bg:"border-white/[0.13] bg-white/[0.07]"},
           {val:"0.82", label:"Effort vs Résult",color:"text-blue-400",   bg:"border-white/[0.13] bg-white/[0.07]"},
         ].map(s=>(
-          <div key={s.label} className={cn("rounded-xl border p-2 text-center", s.bg, (s as any).glow)}>
+          <div key={s.label} className={cn("relative overflow-hidden rounded-xl border p-2 text-center", s.bg, (s as any).glow)}>
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"/>
             <p className={cn("text-[15px] font-black leading-none", s.color)}>{s.val}</p>
             <p className="mt-0.5 text-[7px] leading-tight text-white/30">{s.label}</p>
           </div>
@@ -345,19 +357,26 @@ function DirectionVisual() {
           <span className="text-[9px] text-white/35">Visites terrain · 7 derniers mois</span>
           <span className="text-[9px] font-black text-teal-400">↑ +63% vs Nov</span>
         </div>
-        <svg viewBox={`0 0 100 ${H}`} className="w-full" style={{height:H}} preserveAspectRatio="none">
+        <svg viewBox={`0 0 100 ${H}`} className="w-full [filter:drop-shadow(0_0_5px_rgba(20,184,184,0.45))]" style={{height:H}} preserveAspectRatio="none">
           <defs>
             <linearGradient id="dirG" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#14B8B8" stopOpacity="0.4"/>
               <stop offset="100%" stopColor="#14B8B8" stopOpacity="0"/>
             </linearGradient>
           </defs>
+          {/* grille horizontale HUD */}
+          {[0.25, 0.5, 0.75].map(f=>(
+            <line key={f} x1="0" x2="100" y1={H*f} y2={H*f} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="2 2"/>
+          ))}
           <path d={area} fill="url(#dirG)"/>
           <path d={line} fill="none" stroke="#14B8B8" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>
           {raw.map((v,i)=>(
             <circle key={i} cx={(i/(raw.length-1))*100} cy={H-(v/maxV)*H}
               r={i===raw.length-1?"3.5":"2"} fill={i===raw.length-1?"#14B8B8":"rgba(20,184,184,0.6)"}/>
           ))}
+          {/* ping sur le dernier point */}
+          <circle cx="100" cy={H-(raw[raw.length-1]/maxV)*H} r="3.5" fill="rgba(20,184,184,0.45)"
+            className="animate-ping-slow" style={{transformBox:"fill-box", transformOrigin:"center"}}/>
         </svg>
         <div className="mt-1.5 flex items-center justify-between px-0.5">
           {months.map((m,i)=>(
@@ -422,8 +441,10 @@ function LaboVisual() {
   return (
     <div className="space-y-2">
       {/* brand header */}
-      <div className="flex items-center gap-2.5 rounded-xl border border-orange-500/20 bg-orange-500/[0.05] px-3 py-2.5">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-amber-400 shadow-[0_4px_14px_-4px_rgba(249,115,22,0.5)]">
+      <div className="relative flex items-center gap-2.5 overflow-hidden rounded-xl border border-orange-500/20 bg-orange-500/[0.05] px-3 py-2.5">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/40 to-transparent"/>
+        <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-amber-400 shadow-[0_4px_14px_-4px_rgba(249,115,22,0.5)]">
+          <span className="pointer-events-none absolute inset-0 animate-ping-slow rounded-xl border border-orange-400/50"/>
           <span className="text-[9px] font-black text-white">Rx</span>
         </div>
         <div className="flex-1 min-w-0">
@@ -444,7 +465,8 @@ function LaboVisual() {
           {val:"34%",  label:"Part de voix",   color:"text-orange-400",  bg:"border-orange-500/20 bg-orange-500/[0.05]"},
           {val:"+8%",  label:"Trend Rx",        color:"text-emerald-400", bg:"border-white/[0.13] bg-white/[0.07]"},
         ].map(s=>(
-          <div key={s.label} className={cn("rounded-xl border p-2 text-center", s.bg)}>
+          <div key={s.label} className={cn("relative overflow-hidden rounded-xl border p-2 text-center", s.bg)}>
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"/>
             <p className={cn("text-[13px] font-black leading-none", s.color)}>{s.val}</p>
             <p className="mt-0.5 text-[7px] leading-tight text-white/30">{s.label}</p>
           </div>
@@ -487,9 +509,18 @@ function LaboVisual() {
             <div className="flex items-center gap-1"><div className="h-1.5 w-3 rounded-full bg-orange-400"/><span className="text-[7px] text-white/30">Rx</span></div>
           </div>
         </div>
-        <svg viewBox={`0 0 100 ${H}`} className="w-full" style={{height:H}} preserveAspectRatio="none">
+        <svg viewBox={`0 0 100 ${H}`} className="w-full [filter:drop-shadow(0_0_4px_rgba(20,184,184,0.35))]" style={{height:H}} preserveAspectRatio="none">
+          {/* grille horizontale HUD */}
+          {[0.25, 0.5, 0.75].map(f=>(
+            <line key={f} x1="0" x2="100" y1={H*f} y2={H*f} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="2 2"/>
+          ))}
           <path d={visLine} fill="none" stroke="#14B8B8"  strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"/>
           <path d={rxLine}  fill="none" stroke="#f97316"  strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="4 2"/>
+          {/* points terminaux */}
+          <circle cx="100" cy={H-(visRaw[visRaw.length-1]/maxV)*H} r="2.5" fill="#14B8B8"/>
+          <circle cx="100" cy={H-(rxRaw[rxRaw.length-1]/maxV)*H} r="2.5" fill="#f97316"/>
+          <circle cx="100" cy={H-(visRaw[visRaw.length-1]/maxV)*H} r="2.5" fill="rgba(20,184,184,0.45)"
+            className="animate-ping-slow" style={{transformBox:"fill-box", transformOrigin:"center"}}/>
         </svg>
         <div className="mt-1.5 flex items-center justify-between px-0.5">
           {months.map((m,i)=>(
@@ -499,7 +530,8 @@ function LaboVisual() {
       </div>
 
       {/* Approved Email — métriques Veeva */}
-      <div className="rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-3 py-2">
+      <div className="relative overflow-hidden rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-3 py-2">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent"/>
         <div className="flex items-center justify-between mb-1.5">
           <p className="text-[8px] uppercase tracking-widest text-blue-300/60">Approved Email</p>
           <span className="text-[8px] text-white/30">Cycle Mai</span>
@@ -519,7 +551,8 @@ function LaboVisual() {
       </div>
 
       {/* CLM — Closed Loop Marketing */}
-      <div className="rounded-xl border border-violet-500/20 bg-violet-500/[0.06] px-3 py-2">
+      <div className="relative overflow-hidden rounded-xl border border-violet-500/20 bg-violet-500/[0.06] px-3 py-2">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent"/>
         <div className="flex items-center justify-between mb-1.5">
           <p className="text-[8px] uppercase tracking-widest text-violet-300/60">CLM · e-Detailing</p>
           <span className="text-[9px] font-black text-violet-400">8.3 slides/visite</span>
@@ -618,6 +651,13 @@ export function ModulesSection() {
     <section className="relative overflow-hidden bg-gradient-to-b from-pharveo-navy via-[#0d2035] to-pharveo-slate py-20 md:py-36">
       <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-[500px] w-[900px] rounded-full bg-pharveo-teal/[0.12] blur-[120px]"/>
 
+      {/* Grille technique masquée — fond HUD très subtil */}
+      <GridPattern
+        width={28}
+        height={28}
+        className="stroke-white/[0.04] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_35%,white,transparent)]"
+      />
+
       <div className="container relative z-10 mx-auto max-w-6xl px-6">
 
         {/* Header */}
@@ -647,13 +687,24 @@ export function ModulesSection() {
                   key={r.id}
                   onClick={() => setActiveId(r.id)}
                   className={cn(
-                    "flex shrink-0 items-center gap-2 rounded-xl border px-5 py-3 text-sm font-semibold transition-all duration-200",
+                    "relative flex shrink-0 items-center gap-2 overflow-hidden rounded-xl border px-5 py-3 text-sm font-semibold transition-all duration-200",
                     isActive
-                      ? "border-white/20 bg-white/[0.10] text-white shadow-sm"
-                      : "border-white/[0.13] bg-white/[0.08] text-white/40 hover:border-white/[0.12] hover:bg-white/[0.06] hover:text-white/70"
+                      ? "bg-white/[0.10] text-white"
+                      : "border-white/[0.13] bg-white/[0.08] text-white/40 hover:-translate-y-0.5 hover:border-white/[0.12] hover:bg-white/[0.06] hover:text-white/70"
                   )}
+                  style={isActive ? {
+                    borderColor: `${r.gradientTo}59`,
+                    boxShadow: `0 0 35px -8px ${r.glowColor}`,
+                  } : undefined}
                 >
-                  <Icon className={cn("h-4 w-4 shrink-0", isActive ? active.accentClass : "")}/>
+                  {isActive && (
+                    <span
+                      className="pointer-events-none absolute inset-x-3 bottom-0 h-px"
+                      style={{background:`linear-gradient(to right, transparent, ${r.gradientTo}99, transparent)`}}
+                    />
+                  )}
+                  {isActive && <PulseDot />}
+                  <Icon className={cn("h-4 w-4 shrink-0", isActive ? r.accentClass : "")}/>
                   <span className="whitespace-nowrap">{r.label}</span>
                 </button>
               );
@@ -663,10 +714,22 @@ export function ModulesSection() {
 
         {/* Tab panel */}
         <BlurFade key={activeId} delay={0} inViewMargin="0px">
-          <div className="grid gap-8 rounded-2xl border border-white/[0.15] bg-white/[0.07] p-6 backdrop-blur-sm md:grid-cols-2 md:gap-10 md:p-10">
+          <div className="relative">
+            {/* Halo doux derrière le panneau */}
+            <div className="pointer-events-none absolute -inset-6 rounded-3xl bg-pharveo-teal/[0.12] blur-2xl" />
+
+            <div className="group relative grid gap-8 overflow-hidden rounded-2xl border border-white/[0.15] bg-white/[0.07] p-6 backdrop-blur-sm md:grid-cols-2 md:gap-10 md:p-10">
+
+            {/* Liseré supérieur brillant */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+            {/* Faisceau lumineux lent sur le contour */}
+            <BorderBeam size={220} duration={14} />
+
+            <CornerBrackets />
 
             {/* Left — texte */}
-            <div className="flex flex-col justify-center">
+            <div className="relative z-10 flex flex-col justify-center">
               <div className="mb-4 flex items-center gap-3">
                 <div
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white"
@@ -714,7 +777,7 @@ export function ModulesSection() {
 
             {/* Right — fenêtre app simulée */}
             <div
-              className="flex flex-col overflow-hidden rounded-2xl"
+              className="relative z-10 flex flex-col overflow-hidden rounded-2xl"
               style={{
                 border:`1px solid ${active.gradientFrom}22`,
                 boxShadow:`0 0 60px -18px ${active.glowColor}, 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.05)`,
@@ -796,13 +859,27 @@ export function ModulesSection() {
                     </div>
                   </div>
                   {/* Content */}
-                  <div className="flex-1 overflow-y-auto p-3">
-                    <ActiveVisual/>
+                  <div className="relative flex-1 overflow-y-auto p-3">
+                    {/* micro-grille de fond façon HUD */}
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:18px_18px]"/>
+                    <div className="relative h-full">
+                      <ActiveVisual/>
+                    </div>
+                  </div>
+
+                  {/* Barre de statut temps réel */}
+                  <div className="flex shrink-0 items-center justify-between border-t border-white/[0.08] bg-[#07101a] px-3 py-1.5">
+                    <div className="flex items-center gap-1.5">
+                      <PulseDot color="bg-emerald-400" ringColor="bg-emerald-400/60"/>
+                      <span className="text-[8px] text-white/30">Temps réel · Sync auto</span>
+                    </div>
+                    <span className="text-[8px] text-white/20">Pharveo · Sénégal</span>
                   </div>
                 </div>
               </div>
             </div>
 
+            </div>
           </div>
         </BlurFade>
 

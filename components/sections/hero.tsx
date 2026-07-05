@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Shield, WifiOff, Globe, Clock, MapPin } from "lucide-react";
+import { ArrowRight, Shield, WifiOff, Lock, Clock, MapPin } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { PharveoPhoneMockup } from "@/components/ui/pharveo-phone-mockup";
+import { Tilt3D } from "@/components/ui/tilt-3d";
 import { cn } from "@/lib/utils";
 
 const rotatingTerms = [
@@ -25,7 +26,7 @@ const metrics = [
 const trustBadges = [
   { Icon: Shield, label: "Conforme ARP Sénégal" },
   { Icon: WifiOff, label: "Offline-first natif" },
-  { Icon: Globe, label: "Données en Suisse" },
+  { Icon: Lock, label: "Données chiffrées & exportables" },
   { Icon: Clock, label: "Go live en 4-8 sem." },
 ];
 
@@ -150,18 +151,19 @@ export function HeroSection() {
           <BlurFade delay={120} inViewMargin="0px">
             <div className="relative flex items-center justify-center lg:justify-end">
               <div className="pointer-events-none absolute inset-x-0 -bottom-8 h-32 bg-gradient-to-t from-pharveo-deep to-transparent z-10 lg:hidden" />
-              <div className="relative lg:-rotate-1 lg:translate-y-4">
+              <Tilt3D>
+              <div className="relative lg:-rotate-1 lg:translate-y-4 [transform-style:preserve-3d]">
                 {/* Container hauteur contrainte sur mobile + scale CSS reliable (zoom ne marche pas sur Safari iOS) */}
-                <div className="h-[395px] sm:h-[500px] lg:h-auto overflow-hidden lg:overflow-visible">
+                <div className="h-[395px] sm:h-[500px] lg:h-auto overflow-hidden lg:overflow-visible lg:[transform:translateZ(25px)]">
                   <div className="origin-top scale-[0.85] sm:scale-[0.85] lg:scale-100">
                     <PharveoPhoneMockup />
                   </div>
                 </div>
 
                 {/* Floating callout labels — desktop only */}
-                <BlurFade delay={340} inViewMargin="0px">
+                <BlurFade delay={340} inViewMargin="0px" className="pointer-events-none absolute inset-0 [transform-style:preserve-3d]">
                   {/* Top-left: Tournée optimisée */}
-                  <div className="absolute -left-[140px] top-[110px] hidden lg:flex items-center gap-2 rounded-2xl border border-teal-500/25 bg-[#0a1a1a]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm">
+                  <div className="absolute -left-[140px] top-[110px] hidden lg:flex items-center gap-2 rounded-2xl border border-teal-500/25 bg-[#0a1a1a]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm [transform:translateZ(60px)]">
                     <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-teal-500/20">
                       <MapPin className="h-3 w-3 text-teal-400" />
                     </div>
@@ -177,7 +179,7 @@ export function HeroSection() {
                   </div>
 
                   {/* Right: Visite en cours LIVE */}
-                  <div className="absolute -right-[148px] top-[260px] hidden lg:flex items-center gap-2 rounded-2xl border border-emerald-500/25 bg-[#0a1a12]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm">
+                  <div className="absolute -right-[148px] top-[260px] hidden lg:flex items-center gap-2 rounded-2xl border border-emerald-500/25 bg-[#0a1a12]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm [transform:translateZ(80px)]">
                     <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500/20">
                       <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
                     </div>
@@ -193,7 +195,7 @@ export function HeroSection() {
                   </div>
 
                   {/* Bottom-left: Hors-ligne prêt */}
-                  <div className="absolute -left-[132px] bottom-[140px] hidden lg:flex items-center gap-2 rounded-2xl border border-amber-500/25 bg-[#1a1200]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm">
+                  <div className="absolute -left-[132px] bottom-[140px] hidden lg:flex items-center gap-2 rounded-2xl border border-amber-500/25 bg-[#1a1200]/90 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm [transform:translateZ(60px)]">
                     <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-amber-500/20">
                       <WifiOff className="h-3 w-3 text-amber-400" />
                     </div>
@@ -209,6 +211,7 @@ export function HeroSection() {
                   </div>
                 </BlurFade>
               </div>
+              </Tilt3D>
             </div>
           </BlurFade>
 

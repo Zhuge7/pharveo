@@ -8,6 +8,7 @@ import { BorderBeam } from "@/components/magicui/border-beam";
 import { Meteors } from "@/components/magicui/meteors";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { GridPattern } from "@/components/magicui/grid-pattern";
+import { CornerBrackets, PulseDot } from "@/components/ui/hud-accents";
 
 const promises = [
   { icon: Calendar, text: "Démo personnalisée 30 min" },
@@ -36,9 +37,21 @@ export function FinalCtaSection() {
 
       <div className="container relative z-10 mx-auto max-w-4xl px-6">
         <BlurFade delay={0} inViewMargin="60px">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-pharveo-navy/80 via-pharveo-slate to-pharveo-navy/60 px-8 py-16 text-center md:px-16 md:py-20 backdrop-blur-sm">
+          <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-pharveo-navy/80 via-pharveo-slate to-pharveo-navy/60 px-8 py-16 text-center md:px-16 md:py-20 backdrop-blur-sm">
+            {/* Grille technique masquée dans la carte */}
+            <GridPattern
+              width={28}
+              height={28}
+              className="[mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,white,transparent)]"
+            />
+
+            {/* Liseré supérieur brillant */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+
             <BorderBeam size={300} duration={10} colorFrom="#0E8A8A" colorTo="#14B8B8" />
             <Meteors number={10} />
+
+            <CornerBrackets color="border-pharveo-cyan/50" />
 
             {/* Badge */}
             <div className="mx-auto mb-8 flex w-fit items-center gap-2 rounded-full border border-pharveo-teal/30 bg-pharveo-teal/10 px-4 py-1.5">
@@ -95,7 +108,8 @@ export function FinalCtaSection() {
                   </ShimmerButton>
                 </form>
               )}
-              <p className="mt-3 text-center text-[11px] text-white/30">
+              <p className="relative z-10 mt-3 flex items-center justify-center gap-2 text-center text-[11px] text-white/30">
+                <PulseDot />
                 Réponse sous 24 h · Sans engagement · Démo en français
               </p>
             </div>
@@ -103,11 +117,11 @@ export function FinalCtaSection() {
             {/* Secondary link */}
             <div className="mt-5">
               <Link
-                href="/contact"
-                className="group inline-flex items-center gap-1.5 text-sm font-medium text-white/45 transition-colors hover:text-white/70"
+                href="/demo"
+                className="group/link relative z-10 inline-flex items-center gap-1.5 text-sm font-medium text-white/45 transition-colors hover:text-white/70"
               >
                 Préférez-vous parler à un humain ?
-                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
               </Link>
             </div>
           </div>
