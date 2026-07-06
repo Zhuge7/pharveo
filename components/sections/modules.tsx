@@ -678,7 +678,7 @@ export function ModulesSection() {
 
         {/* Role tab bar */}
         <BlurFade delay={60} inViewMargin="60px">
-          <div className="mb-8 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <div className="mb-8 flex gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {roles.map(r => {
               const Icon = r.icon;
               const isActive = r.id === activeId;

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { cn } from "@/lib/utils";
 
@@ -86,30 +86,59 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile menu drawer */}
+        {/* Mobile menu drawer — style HUD */}
         <div
           className={cn(
-            "overflow-hidden transition-all duration-300 md:hidden",
+            "relative overflow-hidden transition-all duration-300 md:hidden",
             menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0",
           )}
         >
-          <nav className="flex flex-col gap-1 px-6 pb-6 pt-2">
-            {navLinks.map((link) => (
+          {/* Liseré + grille technique en fond */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pharveo-cyan/40 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:22px_22px]" />
+
+          <nav className="relative flex flex-col px-6 pb-6 pt-3">
+            {navLinks.map((link, i) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm font-medium text-white/60 transition-colors hover:bg-white/[0.05] hover:text-white"
+                className={cn(
+                  "group flex items-center justify-between border-b border-white/[0.06] px-1 py-3.5 transition-all duration-300",
+                  menuOpen ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0",
+                )}
+                style={{ transitionDelay: menuOpen ? `${80 + i * 50}ms` : "0ms" }}
               >
-                {link.label}
+                <span className="flex items-center gap-3">
+                  <span className="font-mono text-[10px] font-semibold text-pharveo-cyan/50">
+                    0{i + 1}
+                  </span>
+                  <span className="text-sm font-medium text-white/70 transition-colors group-hover:text-white">
+                    {link.label}
+                  </span>
+                </span>
+                <ArrowRight className="h-3.5 w-3.5 text-white/20 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-pharveo-cyan" />
               </Link>
             ))}
-            <div className="mt-3 pt-3 border-t border-white/[0.06]">
+            <div
+              className={cn(
+                "mt-5 transition-all duration-300",
+                menuOpen ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
+              )}
+              style={{ transitionDelay: menuOpen ? `${80 + navLinks.length * 50}ms` : "0ms" }}
+            >
               <Link href="/demo" onClick={() => setMenuOpen(false)}>
                 <ShimmerButton className="w-full py-3 text-sm font-semibold">
                   Demander une démo
                 </ShimmerButton>
               </Link>
+              <p className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/30">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping-slow rounded-full bg-pharveo-cyan/60" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-pharveo-cyan" />
+                </span>
+                Réponse sous 24 h · Démo en français
+              </p>
             </div>
           </nav>
         </div>

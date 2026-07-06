@@ -51,9 +51,9 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/3 -translate-x-1/2 -top-[6%] h-[700px] w-[1000px] rounded-full bg-pharveo-teal/[0.45] blur-[130px] animate-glow-pulse" />
         <div className="absolute left-1/2 -translate-x-1/2 top-[20%] h-[320px] w-[520px] rounded-full bg-pharveo-cyan/[0.22] blur-[80px] animate-glow-pulse [animation-delay:2s]" />
-        <div className="absolute -left-[10%] top-[35%] h-[420px] w-[520px] rounded-full bg-indigo-600/[0.15] blur-[100px]" />
-        <div className="absolute right-[5%] top-[10%] h-[550px] w-[550px] rounded-full bg-pharveo-teal/[0.12] blur-[110px] animate-glow-pulse [animation-delay:1s]" />
-        <div className="absolute right-[15%] top-[45%] h-[280px] w-[380px] rounded-full bg-pharveo-cyan/[0.08] blur-[80px]" />
+        <div className="hidden md:block absolute -left-[10%] top-[35%] h-[420px] w-[520px] rounded-full bg-indigo-600/[0.15] blur-[100px]" />
+        <div className="hidden md:block absolute right-[5%] top-[10%] h-[550px] w-[550px] rounded-full bg-pharveo-teal/[0.12] blur-[110px] animate-glow-pulse [animation-delay:1s]" />
+        <div className="hidden md:block absolute right-[15%] top-[45%] h-[280px] w-[380px] rounded-full bg-pharveo-cyan/[0.08] blur-[80px]" />
       </div>
 
       {/* Grid overlay */}
@@ -134,13 +134,13 @@ export function HeroSection() {
 
             {/* Metrics - 3 chiffres clés */}
             <BlurFade delay={230} inViewMargin="0px">
-              <div className="mt-8 flex flex-wrap gap-6 border-t border-white/[0.08] pt-7 justify-center lg:justify-start">
+              <div className="mt-8 grid w-full grid-cols-3 gap-3 border-t border-white/[0.08] pt-7 lg:flex lg:w-auto lg:gap-6">
                 {metrics.map((m) => (
                   <div key={m.label} className="flex flex-col items-center lg:items-start">
-                    <span className="font-display text-3xl font-black text-white leading-none tracking-tight">
+                    <span className="font-display text-2xl font-black text-white leading-none tracking-tight sm:text-3xl">
                       {m.value}
                     </span>
-                    <span className="mt-1 text-[11px] font-medium text-white/45 uppercase tracking-[0.07em]">{m.label}</span>
+                    <span className="mt-1 text-center text-[11px] font-medium uppercase tracking-[0.07em] text-white/45 lg:text-left">{m.label}</span>
                   </div>
                 ))}
               </div>
@@ -150,6 +150,19 @@ export function HeroSection() {
           {/* ── Colonne droite - phone mockup ── */}
           <BlurFade delay={120} inViewMargin="0px">
             <div className="relative flex items-center justify-center lg:justify-end">
+              {/* Backdrop mobile : halo radial + anneaux radar (remplace le glow du mockup, clippé sur mobile) */}
+              <div className="pointer-events-none absolute left-1/2 top-[190px] -translate-x-1/2 -translate-y-1/2 sm:top-[240px] lg:hidden">
+                <div className="relative h-[340px] w-[340px] sm:h-[440px] sm:w-[440px]">
+                  <div className="absolute inset-0 animate-glow-pulse rounded-full bg-[radial-gradient(circle,rgba(20,184,184,0.32)_0%,rgba(20,184,184,0.08)_45%,transparent_68%)]" />
+                  <div className="absolute inset-3 rounded-full border border-pharveo-cyan/[0.16]" />
+                  <div className="absolute inset-12 rounded-full border border-dashed border-pharveo-cyan/[0.11]" />
+                  <div className="absolute inset-24 rounded-full border border-pharveo-cyan/[0.08]" />
+                  {/* points cardinaux */}
+                  <span className="absolute left-1/2 top-3 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-pharveo-cyan/60" />
+                  <span className="absolute left-3 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-pharveo-cyan/40" />
+                  <span className="absolute right-3 top-1/2 h-1 w-1 -translate-y-1/2 translate-x-1/2 rounded-full bg-pharveo-cyan/40" />
+                </div>
+              </div>
               <div className="pointer-events-none absolute inset-x-0 -bottom-8 h-32 bg-gradient-to-t from-pharveo-deep to-transparent z-10 lg:hidden" />
               <Tilt3D>
               <div className="relative lg:-rotate-1 lg:translate-y-4 [transform-style:preserve-3d]">

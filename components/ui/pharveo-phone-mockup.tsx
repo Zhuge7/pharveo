@@ -48,9 +48,9 @@ const samples = [
 export function PharveoPhoneMockup({ className }: { className?: string }) {
   return (
     <div className={cn("relative mx-auto w-[272px] select-none", className)}>
-      {/* Ambient glow */}
-      <div className="pointer-events-none absolute inset-0 -m-8 rounded-[3rem] bg-teal-500/[0.22] blur-[65px]" />
-      <div className="pointer-events-none absolute -bottom-4 left-1/2 -translate-x-1/2 h-32 w-48 rounded-full bg-cyan-400/[0.12] blur-[50px]" />
+      {/* Ambient glow — desktop uniquement : clippé par l'overflow mobile, il produit un rectangle aux bords durs */}
+      <div className="pointer-events-none absolute inset-0 -m-8 hidden rounded-[3rem] bg-teal-500/[0.22] blur-[65px] lg:block" />
+      <div className="pointer-events-none absolute -bottom-4 left-1/2 hidden h-32 w-48 -translate-x-1/2 rounded-full bg-cyan-400/[0.12] blur-[50px] lg:block" />
 
       {/* Physical buttons */}
       <div className="absolute -left-[3px] top-[80px]  h-7  w-[3px] rounded-l-sm bg-white/[0.13]" />
