@@ -50,9 +50,14 @@ export const metadata: Metadata = {
       "Souverain. Hors-ligne. En XOF. Conçu pour vos délégués médicaux.",
   },
   icons: {
-    icon: "/favicon-pharveo.png",
-    shortcut: "/favicon-pharveo.png",
-    apple: "/favicon-pharveo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon-48.png", type: "image/png", sizes: "48x48" },
+      { url: "/icon-96.png", type: "image/png", sizes: "96x96" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   robots: { index: true, follow: true },
   verification: {
